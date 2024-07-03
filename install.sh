@@ -11,12 +11,12 @@ function echo_message() {
 
 # Function to prompt for input
 function prompt_for_input() {
-    read -p "Enter Zerto username, format: domain\username" username
-    read -s -p "Enter Zerto password" password
-    read -p "Enter SMTP server" smtp_server
-    read -p "Enter SMTP port" smtp_port
-    read -p "Enter SMTP username" smtp_user
-    read -s -p "Enter SMTP password" smtp_password
+    read -p "Enter Zerto username, format domain\username: " username
+    read -s -p "Enter Zerto password: " password
+    read -p "Enter SMTP server: " smtp_server
+    read -p "Enter SMTP port: " smtp_port
+    read -p "Enter SMTP username: " smtp_user
+    read -s -p "Enter SMTP password: " smtp_password
     echo # newline
 }
 
@@ -71,13 +71,18 @@ echo "Environment variables have been written to .env file. You may edit this fi
 
 prompt_for_cronjob
 # Setting up the cron job to run every 15 minutes"
-echo_message "Setting up the cron job to run every 15 minutes..."
-# Get current user
-current_user=$(whoami)
-#(Re)write the cron jobs to ensure they run every 15 minutes
-crontab -l | grep -v "$sgu_path" | crontab -
-(crontab -l 2>/dev/null; echo "*/15 * * * * cd $(pwd) && ./bin/python $sgu_path") | crontab -
-(crontab -l 2>/dev/null; echo "*/15 * * * * cd $(pwd) && ./bin/python $boi_path") | crontab -
-(crontab -l 2>/dev/null; echo "*/15 * * * * cd $(pwd) && ./bin/python $fb_path") | crontab -
+if [ "$setup_cron_job" = "yes" ]; then
+    echo_message "Setting up the cron job to run every 15 minutes..."
+    # Get current user
+    current_user=$(whoami)
+    #(Re)write the cron jobs to ensure they run every 15 minutes
+    crontab -l | grep -v "$sgu_path" | crontab -
+    (crontab -l 2>/dev/null; echo "*/15 * * * * cd $(pwd) && ./bin/python $sgu_path") | crontab -
+    (crontab -l 2>/dev/null; echo "*/15 * * * * cd $(pwd) && ./bin/python $boi_path") | crontab -
+    (crontab -l 2>/dev/null; echo "*/15 * * * * cd $(pwd) && ./bin/python $fb_path") | crontab -
+    echo "Cron job has been set up to run every 15 minutes."
+else
+    echo_message "Skipping cron job setup..."
+fi
 
 echo_message "Installation complete. Please check the .env file that was created to ensure the environment variables are correct before running."
