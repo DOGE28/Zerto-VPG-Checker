@@ -28,11 +28,11 @@ class ZertoGet():
 
 
         if self.site == "SGU":
-            self.sgu_response = requests.post(self.sgu_auth_url, json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password}, verify=False)
+            self.sgu_response = requests.post(self.sgu_auth_url, json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password},timeout=10, verify=False)
         if self.site == "BOI":
-            self.boi_response = requests.post(self.boi_auth_url, json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password}, verify=False)
+            self.boi_response = requests.post(self.boi_auth_url, json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password},timeout=10, verify=False)
         if self.site == "FB":
-            self.fb_response = requests.post(self.fb_auth_url, json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password}, verify=False)
+            self.fb_response = requests.post(self.fb_auth_url, json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password},timeout=10, verify=False)
         
         
         
