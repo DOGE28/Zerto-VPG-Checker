@@ -6,9 +6,7 @@ This repo is designed to alert the cloud team when a percentage of a Zerto site'
 
 CD into the directory you want to install the script in, then run:
 ```
-wget https://github.com/DOGE28/Zerto-VPG-Checker/archive/refs/heads/main.zip -O repository.zip
-unzip repository.zip
-cd Zerto VPG Checker
+git clone https://github.com/DOGE28/Zerto-VPG-Checker.git
 ```
 
 It will create a .env file and prompt for the following environment variables:
