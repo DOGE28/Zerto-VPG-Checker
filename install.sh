@@ -4,9 +4,11 @@ set -e
 
 # Function to display messages
 function echo_message() {
+    echo
     echo "----------------------"
     echo $1
     echo "----------------------"
+    echo
 }
 
 # Function to prompt for input
@@ -41,10 +43,13 @@ echo_message "Updating and installing system dependencies..."
 sudo apt-get update
 sudo apt-get install -y python3 python3-venv python3-pip
 
+echo "System dependencies have been updated and installed."
+
 # Create a virtual environment
 echo_message "Creating a virtual environment..."
 python3 -m venv venv
 source venv/bin/activate
+echo "Virtual environment has been created and activated."
 
 # Install Python dependencies
 echo_message "Installing Python dependencies..."
