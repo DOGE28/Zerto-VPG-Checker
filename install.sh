@@ -53,6 +53,8 @@ pip install -r requirements.txt
 
 # Create .env file with sample environment variables...
 echo_message "Creating .env file with environment variables..."
+prompt_for_input
+
 cat <<EOL > .env
 username="$username"
 password="$password"
@@ -66,6 +68,8 @@ fb_zerto_base_url="sgu-fb-zvm.tonaquint.local:9669"
 EOL
 echo "Environment variables have been written to .env file. You may edit this file to change the environment variables if needed."
 
+
+prompt_for_cronjob
 # Setting up the cron job to run every 15 minutes"
 echo_message "Setting up the cron job to run every 15 minutes..."
 # Get current user
