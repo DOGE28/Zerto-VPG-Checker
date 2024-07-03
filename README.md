@@ -4,20 +4,24 @@ This repo is designed to alert the cloud team when a percentage of a Zerto site'
 
 # Installation
 
-CD into the directory you want to install the script in, then run:
+First, you'll want to CD into the directory you want to use. Below is a great start, otherwise create your own folder:
+```
+mkdir Zerto-Alerts
+cd Zerto-Alerts
+```
+Next, download and unzip the script files:
 ```
 curl -LO https://github.com/DOGE28/Zerto-VPG-Checker/archive/refs/heads/main.zip
 unzip main.zip -d Zerto-VPG-Checker
-rm main.zip
+rm main.zip # This is just for cleanup
 cd Zerto-VPG-Checker
-chmod +x install.sh
+chmod +x install.sh # Makes the install script executable
 ```
 If you haven't run into any errors, you can then run:
 ```
 ./install.sh
 ```
-This script will download any neccesary dependencies, create a python virtual environment, and start creating environment variables.
-It will create a .env file and prompt for the following environment variables:
+This script will download any neccesary dependencies, create a python virtual environment, and will create a .env file and prompt for the following environment variables:
 
 * username = Zerto username for interacting with ZVM API
 * password = Zerto password
@@ -27,4 +31,4 @@ It will create a .env file and prompt for the following environment variables:
 * smtp_password = Password associated with smtp_user
 
 
- You will be asked if you want to create a `crontab` job to be run every 15 minutes. A job is created for each of the main ZVM locations, SGU, BOI, and FB. If you'd rather create these on your own, say no to the prompt.
+ You will be asked if you want to create a `crontab` job to be run every 15 minutes. A job is created for each of the main ZVM locations, SGU, BOI, and FB. Each site will be ran in parallel. If you'd rather create these on your own, say no to the prompt.
