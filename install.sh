@@ -55,6 +55,8 @@ echo "Virtual environment has been created and activated."
 echo_message "Installing Python dependencies..."
 pip install --upgrade pip
 pip install -r requirements.txt
+echo
+echo "Python dependencies have been installed."
 
 # Create .env file with sample environment variables...
 echo_message "Creating .env file with environment variables..."
@@ -71,8 +73,9 @@ sgu_zerto_base_url="sgu-zvm.tonaquint.local:9669"
 boi_zerto_base_url="boi-zvm.tonaquint.local:9669"
 fb_zerto_base_url="sgu-fb-zvm.tonaquint.local:9669"
 EOL
+echo
 echo "Environment variables have been written to .env file. You may edit this file to change the environment variables if needed."
-
+echo
 
 prompt_for_cronjob
 # Setting up the cron job to run every 15 minutes"
