@@ -51,7 +51,7 @@ def get_site_vpg_status(auth_token):
 
     return site_vpg_status
 
-def check_percent_down(site_vpg_status):
+def get_percent_down(site_vpg_status):
     site_list = []
     for key, value in site_vpg_status.items():
         sites_down = {}
@@ -71,7 +71,7 @@ def check_percent_down(site_vpg_status):
     return site_list
 
 
-check_percent_down(get_site_vpg_status(auth_token))
+get_percent_down(get_site_vpg_status(auth_token))
 zerto.close_session(auth_token)
 
 end = time.time()
