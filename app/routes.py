@@ -1,19 +1,10 @@
 import requests
 from config import settings
-import argparse
 
 requests.packages.urllib3.disable_warnings()
 
 class ZertoGet():
     def __init__(self, site=None):
-        
-        parser = argparse.ArgumentParser(description="Zerto VPG Checker")
-        parser.add_argument("-s", help="ZVM site location, possible values are SGU, BOI, FB")
-
-        args = parser.parse_args()
-        if site is None:
-            site == args.s
-
 
         self.site = site
         self.sgu_zvm_base_url = settings.sgu_zerto_base_url
@@ -43,7 +34,7 @@ class ZertoGet():
             if self.sgu_response.status_code == 200:
                 print('Login successful to SGU ZVM')
                 sgu_auth_token = self.sgu_response.headers['x-zerto-session']
-                print(sgu_auth_token)
+                #print(sgu_auth_token)
                 return sgu_auth_token
             else:
                 print(f'Response Code: {self.sgu_response.status_code} | Login failed at SGU ZVM')
@@ -141,6 +132,24 @@ class ZertoGet():
         response = requests.get(f'https://{url}/v1/vpgs/{vpg}', headers=headers, verify=False)
 
         return response.json()
+    
+    def close_session(self, auth_token):
+        if self.site == "SGU":
+            url = self.sgu_zvm_base_url
+        if self.site == 'BOI':
+            url = self.boi_zvm_base_url
+        if self.site == 'FB':
+            url = self.fb_zbm_base_url
+
+        headers = {
+            'Content-Type': 'application/json',
+            'x-zerto-session': auth_token
+        }
+        response = requests.delete(f'https://{url}/v1/session', headers=headers, verify=False)
+        if response.status_code == 200:
+            print('Session closed successfully')
+        else:
+            print('Session failed to close')
 
 
 
