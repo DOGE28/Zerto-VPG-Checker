@@ -46,8 +46,7 @@ def get_site_vpg_status(auth_token):
     site_vpg_status['3form']["vpgs_up"] = dumb + 1
     return site_vpg_status
 
-def check_percent_down():
-    site_vpg_status = get_site_vpg_status(auth_token)
+def check_percent_down(site_vpg_status):
     for key, value in site_vpg_status.items():
         total_vpgs = value['vpgs_up'] + value['vpgs_down']
         percent_down = (value['vpgs_down'] / total_vpgs) * 100
