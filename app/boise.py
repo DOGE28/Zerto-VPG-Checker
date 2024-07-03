@@ -13,7 +13,7 @@ auth_token = zerto.login()
 print("Getting Response from Zerto Server")
 
 # Get SourceSite for each VPG
-#Dict of single site and VPG status format: {site_name: name, vpgs_up: up, vpgs_down: down}
+#Dict of single site and VPG status format: {site_name: {vpgs_up: up, vpgs_down: down}}
 #List of all sites and their VPG statuses.
 #The status of each VPG is either "up" or "down" and is determined by the "Status" key in the response.
 

@@ -13,7 +13,7 @@ auth_token = zerto.login()
 print("Getting Response from Zerto Server")
 
 # Get SourceSite for each VPG
-#Dict of single site and VPG status format: {site_name: name, vpgs_up: up, vpgs_down: down}
+#Dict of single site and VPG status format: {site_name: {vpgs_up: up, vpgs_down: down}}
 #List of all sites and their VPG statuses.
 #The status of each VPG is either "up" or "down" and is determined by the "Status" key in the response.
 
@@ -46,7 +46,13 @@ def get_site_vpg_status(auth_token):
     site_vpg_status['3form']["vpgs_up"] = dumb + 1
     return site_vpg_status
 
-print(get_site_vpg_status(auth_token))
+def check_percent_down():
+    site_vpg_status = get_site_vpg_status(auth_token)
+    for key, value in site_vpg_status.items():
+        total_vpgs = value['vpgs_up'] + value['vpgs_down']
+        percent_down = (value['vpgs_down'] / total_vpgs) * 100
+        print(key, ":", percent_down)
+
+check_percent_down()
 end = time.time()
 print("Time taken:", end-start)
-

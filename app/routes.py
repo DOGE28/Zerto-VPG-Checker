@@ -16,9 +16,9 @@ class ZertoGet():
 
 
         self.site = site
-        self.sgu_zvm_base_url = 'sgu-zvm.tonaquint.local:9669'
-        self.boi_zvm_base_url = 'boi-zvm.tonaquint.local:9669'
-        self.fb_zbm_base_url = 'sgu-fb-zvm.tonaquint.local:9669'
+        self.sgu_zvm_base_url = settings.sgu_zerto_base_url
+        self.boi_zvm_base_url = settings.boi_zerto_base_url
+        self.fb_zbm_base_url = settings.fb_zerto_base_url
         self.user_name = settings.username
         self.password = settings.password
         self.sgu_auth_url = f'https://{self.sgu_zvm_base_url}/v1/session/add'
