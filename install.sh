@@ -53,7 +53,7 @@ pip install -r requirements.txt
 
 # Create .env file with sample environment variables...
 echo_message "Creating .env file with environment variables..."
-cat >>EOL > .env
+cat <<EOL > .env
 username="$username"
 password="$password"
 smtp_server="$smtp_server"
