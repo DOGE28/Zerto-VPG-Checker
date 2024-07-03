@@ -25,8 +25,8 @@ function prompt_for_cronjob() {
     while true; do
         read -p "Do you want to set up a cron job to run every 15 minutes? (y/n)" yn
         case $yn in
-            [Yy]* ) ; break;;
-            [Nn]* ) ; break;;
+            [Yy]* ) break;;
+            [Nn]* ) break;;
             * ) echo "Please answer yes or no.";;
         esac
     done
