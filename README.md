@@ -6,12 +6,11 @@ This project is designed to alert the cloud team when a percentage of a Zerto si
 
 Before you begin your installation, you will need to find a machine/VM that is on the same network as the ZVMs you're trying to connect to. They are not connected to the internet, so you can't install this script anywhere.
 
-First, you'll want to CD into the directory you want to use. Below is a great start:
+First, you'll want to create and CD into the directory you want to use. Below is a great start:
 ```
 mkdir Zerto-Alerts
 cd Zerto-Alerts
 ```
-Otherwise create your own folder.
 
 Next, download and unzip the script files:
 ```
