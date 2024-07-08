@@ -9,6 +9,7 @@ parser.add_argument("-s", "--site", help="Site to get VPG status for, if not spe
 start = time.time()
 print("Initializing Zerto Object")
 
+
 if parser.parse_args().site:
     zerto = routes.ZertoGet(site=parser.parse_args().site)
 else:

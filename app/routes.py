@@ -17,14 +17,26 @@ class ZertoGet():
         self.fb_auth_url = f'https://{self.fb_zbm_base_url}/v1/session/add'
 
 
-
-        if self.site == "SGU":
-            self.sgu_response = requests.post(self.sgu_auth_url, json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password},timeout=10, verify=False)
-        if self.site == "BOI":
-            self.boi_response = requests.post(self.boi_auth_url, json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password},timeout=10, verify=False)
-        if self.site == "FB":
-            self.fb_response = requests.post(self.fb_auth_url, json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password},timeout=10, verify=False)
+        try:
+            if self.site == "SGU":
+                self.sgu_response = requests.post(self.sgu_auth_url, json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password},timeout=10, verify=False)
+        except:
+            print("Failed to connect to SGU ZVM, attempting direct connection with IP address.")
+            self.sgu_response = requests.post(f'https://{settings.sgu_ip}:9669/v1/session/add', json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password},timeout=10, verify=False)
         
+        try:
+            if self.site == "BOI":
+                self.boi_response = requests.post(self.boi_auth_url, json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password},timeout=10, verify=False)
+        except:
+            print("Failed to connect to BOI ZVM, attempting direct connection with IP address.")
+            self.boi_response = requests.post(f'https://{settings.boi_ip}:9669/v1/session/add', json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password},timeout=10, verify=False)   
+        
+        try:
+            if self.site == "FB":
+                self.fb_response = requests.post(self.fb_auth_url, json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password},timeout=10, verify=False)
+        except:
+            print("Failed to connect to FB ZVM, attempting direct connection with IP address.")
+            self.fb_response = requests.post(f'https://{settings.fb_ip}:9669/v1/session/add', json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password},timeout=10, verify=False)
         
         
         

@@ -84,6 +84,9 @@ smtp_password="$smtp_password"
 sgu_zerto_base_url="sgu-zvm.tonaquint.local:9669"
 boi_zerto_base_url="boi-zvm.tonaquint.local:9669"
 fb_zerto_base_url="sgu-fb-zvm.tonaquint.local:9669"
+sgu_ip="172.16.100.19"
+boi_ip="172.17.6.20"
+fb_ip="172.16.93.6"
 EOL
 echo
 echo "Environment variables have been written to .env file. You may edit this file to change the environment variables if needed."
