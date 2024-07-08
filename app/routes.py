@@ -22,10 +22,10 @@ class ZertoGet():
 
         try:
             if self.site == "SGU":
-                self.sgu_response = requests.post(self.sgu_auth_url, json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password},timeout=120, verify=False)
+                self.sgu_response = requests.post(self.sgu_auth_url, json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password},timeout=10, verify=False)
         except:
             print("Failed to connect to SGU ZVM, attempting direct connection with IP address.")
-            self.sgu_response = requests.post(f'https://{self.sgu_ip}:9669/v1/session/add', json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password}, timeout=120, verify=False)
+            self.sgu_response = requests.post(f'https://{self.sgu_ip}:9669/v1/session/add', json={'authenticationMethod': 0, 'login': self.user_name, 'password': self.password}, timeout=10, verify=False)
         
         try:
             if self.site == "BOI":
