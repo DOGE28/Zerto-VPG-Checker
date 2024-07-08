@@ -25,7 +25,7 @@ function prompt_for_input() {
 # Function to prompt for cronjob creation
 function prompt_for_cronjob() {
     while true; do
-        read -p "Do you want to set up a cron job? (y/n)" yn
+        read -p "Do you want to set up a cron job for each location? (y/n)" yn
         case $yn in
             [Yy]* ) echo ; break;;
             [Nn]* ) echo ; break;;
