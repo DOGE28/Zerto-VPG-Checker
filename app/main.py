@@ -1,10 +1,18 @@
 import routes
 import time
+import argparse
+
+parser = argparse.ArgumentParser(description="Get the percentage of VPGs down for each site")
+parser.add_argument("-s", "--site", help="Site to get VPG status for, if not specified, default is SGU")
+
 
 start = time.time()
 print("Initializing Zerto Object")
 
-zerto = routes.ZertoGet(site="SGU")
+if parser.parse_args().site:
+    zerto = routes.ZertoGet(site=parser.parse_args().site)
+else:
+    zerto = routes.ZertoGet(site="SGU")
 
 print("Starting Authentication Process")
 

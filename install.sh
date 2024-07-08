@@ -25,13 +25,25 @@ function prompt_for_input() {
 # Function to prompt for cronjob creation
 function prompt_for_cronjob() {
     while true; do
-        read -p "Do you want to set up a cron job to run every 15 minutes? (y/n)" yn
+        read -p "Do you want to set up a cron job? (y/n)" yn
         case $yn in
             [Yy]* ) echo ; break;;
             [Nn]* ) echo ; break;;
             * ) echo "Please answer yes or no.";;
         esac
     done
+}
+
+function prompt_for_cronjob_interval() {
+    while true; do
+        read -p "Enter the interval in minutes for the cron job: " interval
+        if [[ $interval =~ ^[0-9]+$ ]]; then
+            break
+        else
+            echo "Please enter a valid number."
+        fi
+    done
+
 }
 
 sgu_path=$"./app/sgu.py"
@@ -78,19 +90,20 @@ echo "Environment variables have been written to .env file. You may edit this fi
 echo
 
 prompt_for_cronjob
-# Setting up the cron job to run every 15 minutes"
+# Deciding whether to set up a cron job"
 if [ "$setup_cron_job" = "yes" ]; then
-    echo_message "Setting up the cron job to run every 15 minutes..."
+    prompt_for_cronjob_interval
+    echo_message "Setting up the cron job to run every $interval minutes..."
     # Get current user
     current_user=$(whoami)
     #(Re)write the cron jobs to ensure they run every 15 minutes
     crontab -l | grep -v "$sgu_path" | crontab -
-    (crontab -l 2>/dev/null; echo "*/15 * * * * cd $(pwd) && ./bin/python $sgu_path") | crontab -
-    (crontab -l 2>/dev/null; echo "*/15 * * * * cd $(pwd) && ./bin/python $boi_path") | crontab -
-    (crontab -l 2>/dev/null; echo "*/15 * * * * cd $(pwd) && ./bin/python $fb_path") | crontab -
-    echo "Cron job has been set up to run every 15 minutes."
+    (crontab -l 2>/dev/null; echo "*/$interval * * * * cd $(pwd) && ./bin/python $sgu_path") | crontab -
+    (crontab -l 2>/dev/null; echo "*/$interval * * * * cd $(pwd) && ./bin/python $boi_path") | crontab -
+    (crontab -l 2>/dev/null; echo "*/$interval * * * * cd $(pwd) && ./bin/python $fb_path") | crontab -
+    echo "Cron job has been set up to run every $interval minutes."
 else
     echo_message "Skipping cron job setup..."
 fi
 
-echo_message "Installation complete. Please check the .env file that was created to ensure the environment variables are correct before running."
+echo_message "Installation complete. Please check the .env file that was created to ensure the environment variables are correct before running. \n Also check the cronjobs to ensure they are set up correctly."
