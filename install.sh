@@ -60,7 +60,7 @@ echo "System dependencies have been updated and installed."
 # Create a virtual environment
 echo_message "Creating a virtual environment..."
 python3 -m venv venv
-source venv/bin/activate
+source ./venv/bin/activate
 echo "Virtual environment has been created and activated."
 
 # Install Python dependencies
@@ -108,5 +108,7 @@ if [ "$setup_cron_job" = "yes" ]; then
 else
     echo_message "Skipping cron job setup..."
 fi
+
+source ./venv/bin/activate
 
 echo_message "Installation complete. Please check the .env file that was created to ensure the environment variables are correct before running. \n Also check the cronjobs to ensure they are set up correctly."
