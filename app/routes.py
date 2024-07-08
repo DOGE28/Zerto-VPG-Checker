@@ -15,7 +15,7 @@ class ZertoGet():
         self.fb_ip = settings.fb_ip
         self.user_name = settings.username
         self.password = settings.password
-        self.sgu_auth_url = f'https://{self.sgu_zvm_base_url}/v1/session/add'
+        self.sgu_auth_url = f'{self.sgu_zvm_base_url}/v1/session/add'
         self.boi_auth_url = f'https://{self.boi_zvm_base_url}/v1/session/add'
         self.fb_auth_url = f'https://{self.fb_zbm_base_url}/v1/session/add'
 
