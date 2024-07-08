@@ -19,6 +19,7 @@ unzip main.zip
 rm main.zip # This is just for cleanup
 cd Zerto-VPG-Checker-main
 chmod +x install.sh # Makes the install script executable
+source ./venv/bin/activate # Activates the virtual environment
 ```
 If you haven't run into any errors, you can then run:
 ```
