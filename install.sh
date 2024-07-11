@@ -94,7 +94,7 @@ echo
 
 prompt_for_cronjob
 # Deciding whether to set up a cron job"
-if [ "$setup_cron_job" = "yes" ]; then
+if [ "$setup_cron_job" = "yes" | "y" | "Y" ]; then
     prompt_for_cronjob_interval
     echo_message "Setting up the cron job to run every $interval minutes..."
     # Get current user

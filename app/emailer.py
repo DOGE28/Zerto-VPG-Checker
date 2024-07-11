@@ -6,7 +6,7 @@ from config import settings
 class Email():
     def __init__(self):
         self.from_email = settings.smtp_user
-        self.to_email = ""
+        self.to_email = "tsullivan@tonaquint.com"
         self.subject = "Test Email"
         self.message = "This email is a test to make sure the email functionality is working."
     
@@ -19,9 +19,8 @@ class Email():
         
     
     def send_email(self, created_email):
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
-        server.login(self.from_email, "password")
+        server = smtplib.SMTP(settings.smtp_server, settings.smtp_port)
+        server.login(self.from_email, settings.smtp_password)
         text = created_email.as_string()
         server.sendmail(created_email, self.to_email, text)
         server.quit()
