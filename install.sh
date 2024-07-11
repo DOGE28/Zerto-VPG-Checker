@@ -5,9 +5,9 @@ set -e
 # Function to display messages
 function echo_message() {
     echo
-    echo "----------------------"
+    echo "---------------------------------------------"
     echo $1
-    echo "----------------------"
+    echo "---------------------------------------------"
     echo
 }
 
