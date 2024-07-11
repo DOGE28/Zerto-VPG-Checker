@@ -14,7 +14,7 @@ function echo_message() {
 # Function to prompt for input
 function prompt_for_input() {
     read -p "Enter Zerto username, format username@domain: " username
-    read -s -p "Enter Zerto password: " password
+    read -p -s "Enter Zerto password: " password
     read -p "Enter SMTP server: " smtp_server
     read -p "Enter SMTP port: " smtp_port
     read -p "Enter SMTP username: " smtp_user
@@ -109,6 +109,6 @@ else
     echo_message "Skipping cron job setup..."
 fi
 
-source ./venv/bin/activate
+source venv/bin/activate
 
-echo_message "Installation complete. Please check the .env file that was created to ensure the environment variables are correct before running. \n Also check the cronjobs to ensure they are set up correctly."
+echo_message "Installation complete. Please check the .env file and cronjobs to make sure they are configured correctly."
