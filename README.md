@@ -38,8 +38,13 @@ This script will download any neccesary dependencies, create a python virtual en
 
 # Running VPG Checker
 
-If you've set up the cron jobs then this will run continuously every 15 minutes on the machine it was set up on forever. If you haven't setup the cron job, then you can run this manually via the commands below
+If you've set up the cron jobs then another prompt will ask for an interval. This interval determines how often in minutes the scripts will run on the machine it was set up on. If you haven't setup the cron job, then you can run this manually via the command line.
 
-```
+The main.py file will take one argument, -s or --site, with three acceptable options: SGU, BOI, or FB
 
+This will run the script against the Boise ZVM:
 ```
+cd app
+python3 main.py -s BOI
+```
+Omitting this argument will default to the SGU site.
