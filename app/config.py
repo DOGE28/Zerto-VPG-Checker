@@ -1,7 +1,7 @@
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    username: str # Example: tonaquint\username
+    username: str # Example: username@tonaquint.local
     password: str
     smtp_server: str
     smtp_port: int 
@@ -14,5 +14,5 @@ class Settings(BaseSettings):
     boi_ip: str
     fb_ip: str
     class Config:
-        env_file = '.env'
+        env_file = '../.env'
 settings = Settings()
