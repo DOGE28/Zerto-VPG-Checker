@@ -8,8 +8,8 @@ Before you begin your installation, you will need to find a machine/VM that is o
 
 First, you'll want to create and CD into the directory you want to use. Below is a great start:
 ```
-mkdir Zerto-Alerts
-cd Zerto-Alerts
+cd
+mkdir Zerto-Alerts && cd Zerto-Alerts
 ```
 
 Next, download and unzip the script files:
