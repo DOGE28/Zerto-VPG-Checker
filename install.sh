@@ -13,7 +13,7 @@ function echo_message() {
 
 # Function to prompt for input
 function prompt_for_input() {
-    read -p "Enter Zerto username, format domain\username: " username
+    read -p "Enter Zerto username, format username@domain: " username
     read -s -p "Enter Zerto password: " password
     read -p "Enter SMTP server: " smtp_server
     read -p "Enter SMTP port: " smtp_port

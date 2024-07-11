@@ -1,7 +1,7 @@
 import routes
 import time
 import argparse
-#import emailer
+import emailer
 
 parser = argparse.ArgumentParser(description="Get the percentage of VPGs down for each site")
 parser.add_argument("-s", "--site", help="Site to get VPG status for, if not specified, default is SGU")
@@ -14,7 +14,7 @@ print("Initializing Zerto Object")
 if parser.parse_args().site:
     zerto = routes.ZertoGet(site=parser.parse_args().site)
 else:
-    zerto = routes.ZertoGet(site="FB")
+    zerto = routes.ZertoGet(site="SGU")
 
 print("Starting Authentication Process")
 
@@ -82,7 +82,11 @@ def get_percent_down(site_vpg_status):
     return site_list
 
 
-get_percent_down(get_site_vpg_status(auth_token))
+site_down_status = get_percent_down(get_site_vpg_status(auth_token))
+em = emailer.Email()
+test_email = em.create_email()
+em.send_email(site_down_status)
+
 zerto.close_session(auth_token)
 
 #em = emailer.Email()
