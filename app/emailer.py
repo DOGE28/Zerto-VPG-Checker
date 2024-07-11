@@ -21,7 +21,7 @@ class Email():
         
     
     def send_email(self, created_email):
-        server = smtplib.SMTP(settings.smtp_server, settings.smtp_port, timeout=10)
+        server = smtplib.SMTP(settings.smtp_server, settings.smtp_port, timeout=120)
         #server.login(self.from_email, settings.smtp_password)
         text = created_email.as_string()
         server.sendmail(created_email, self.to_email, text)

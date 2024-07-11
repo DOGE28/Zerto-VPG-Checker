@@ -66,14 +66,14 @@ def get_percent_down(site_vpg_status):
     for key, value in site_vpg_status.items():
         sites_down = {}
         total_vpgs = value['vpgs_up'] + value['vpgs_down']
-        print(f"Total VPGs UP: {value['vpgs_up']}")
-        print(f"Total VPGs DOWN: {value['vpgs_down']}")
+        #print(f"Total VPGs UP: {value['vpgs_up']}")
+        #print(f"Total VPGs DOWN: {value['vpgs_down']}")
         if total_vpgs == 0:
             #print(key, ": 0%")
             continue
         
         percent_down = (value['vpgs_down'] / total_vpgs) * 100
-        sites_down[key] = f'{percent_down}% Down'
+        sites_down[key] = f'{percent_down} % Down'
         site_list.append(sites_down)
         
         #print(key, "|", "Total VPGs:", total_vpgs, "|", f'{round(percent_down)}', "%", "down")
@@ -83,9 +83,20 @@ def get_percent_down(site_vpg_status):
 
 
 site_down_status = get_percent_down(get_site_vpg_status(auth_token))
-em = emailer.Email()
-test_email = em.create_email()
-em.send_email(site_down_status)
+
+sites_down = []
+for key, value in site_down_status[1].items():
+    if float(value[:4]) > 10.0:
+        sites_down.append({key: f"{value}% Down"})
+        #print("Majority Site Down")
+        #print(key, value)
+
+if sites_down:
+    em = emailer.Email()
+    test_email = em.create_email()
+    em.send_email(f"The following Zerto Sites are past the down threshold: {sites_down} \n Please check the {zerto.site} ZVM for more information.")
+else:
+    print("No Sites are down")
 
 zerto.close_session(auth_token)
 
