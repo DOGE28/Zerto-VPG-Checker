@@ -78,7 +78,7 @@ def get_percent_down(site_vpg_status):
         
         #print(key, "|", "Total VPGs:", total_vpgs, "|", f'{round(percent_down)}', "%", "down")
         #print(total_vpgs)
-    print(site_list)
+    #print(site_list)
     return site_list
 
 
