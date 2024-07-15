@@ -4,6 +4,10 @@ from email.mime.multipart import MIMEMultipart
 from config import settings
 
 class Email():
+    """
+    This class is used to send an email to the email address specified in the to_email attribute.
+    
+    """
     def __init__(self):
         self.from_email = settings.smtp_user
         self.to_email = "tsullivan@tonaquint.com"
