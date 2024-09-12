@@ -1,0 +1,87 @@
+
+{"API SCHEMA": "Status Get"}
+
+['Initializing', 'MeetingSLA', 'NotMeetingSLA', 'RpoNotMeetingSLA', 'HistoryNotMeetingSLA', 'FailingOver', 'Moving', 'Deleting', 'Recovered']
+
+
+{"API SCHEMA": "VPG Get"}
+
+[
+    {
+      "progressPercentage": 0,
+      "zorg": {
+        "rel": "string",
+        "href": "string",
+        "type": "string",
+        "identifier": "string"
+      },
+      "priority": 0,
+      "vmsCount": 0,
+      "provisionedStorageInMB": 0,
+      "usedStorageInMB": 0,
+      "ioPs": 0,
+      "throughputInMB": 0,
+      "actualRPO": 0,
+      "configuredRpoSeconds": 0,
+      "lastTest": "2024-09-11T15:15:50.854Z",
+      "vpgName": "string",
+      "vpgDescription": "string",
+      "vpgType": "string",
+      "link": {
+        "rel": "string",
+        "href": "string",
+        "type": "string",
+        "identifier": "string"
+      },
+      "protectedSiteName": "string",
+      "protectedSite": {
+        "rel": "string",
+        "href": "string",
+        "type": "string",
+        "identifier": "string"
+      },
+      "recoverySiteName": "string",
+      "recoverySite": {
+        "rel": "string",
+        "href": "string",
+        "type": "string",
+        "identifier": "string"
+      },
+      "entities": {
+        "protected": 0,
+        "recovery": 0
+      },
+      "status": 0,
+      "subStatus": 0,
+      "activeProcessesApi": {
+        "runningFailOverTestApi": {
+          "stage": "string"
+        }
+      },
+      "serviceProfile": {
+        "rel": "string",
+        "href": "string",
+        "type": "string",
+        "identifier": "string"
+      },
+      "backupEnabled": true,
+      "failSafeHistory": {
+        "actualFailSafeHistory": 0,
+        "configuredFailSafeHistory": 0,
+        "failSafeDescription": "string"
+      },
+      "historyStatusApi": {
+        "actualHistoryInMinutes": 0,
+        "configuredHistoryInMinutes": 0,
+        "earliestCheckpoint": {
+          "checkpointIdentifier": "string",
+          "timeStamp": "2024-09-11T15:15:50.854Z",
+          "tag": "string",
+          "type": 0
+        }
+      },
+      "alertStatus": 0
+    }
+  ]
+
+  
