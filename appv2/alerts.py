@@ -69,7 +69,7 @@ class SendEmails(Alerts):
 
         Please investigate immediately!
         """
-        self.server = "10.200.201.15"
+        self.server = ""
         self.port = 25
 
     def send(self):
