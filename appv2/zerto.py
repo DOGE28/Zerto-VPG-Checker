@@ -37,7 +37,7 @@ class _ZertoAuth():
             return None
         #print(base_url)
         #base_url = '10.103.83.190'
-        print(self.base_url)
+        #print(self.base_url)
         auth_url = f'https://{self.base_url}/auth/realms/zerto/protocol/openid-connect/token'
         print("Attempting to authenticate...")
 
@@ -62,6 +62,7 @@ class ZertoGet():
         self.zerto_auth = _ZertoAuth()
         self.auth_token = self.zerto_auth.auth(location)
         self.zvm_name = self.zerto_auth.zvm_name
+        self.subs_naughty_list = [8, 24, 27, 30, 31, 32, 33] # List of substatuses that are not good and will cause a VPG to be considered down
         #print(self.auth_token)
         self.base_url = self.zerto_auth.base_url
         #print(location)
@@ -118,27 +119,40 @@ class ZertoGet():
         '''
         Returns the status of a VPG if a status number is provided. If no status number is provided, it returns a list of all possible statuses.
         '''
+        headers = {
+                'Content-Type': 'application/json',
+                'Authorization': f'Bearer {self.auth_token}'
+            }
+        url = f'https://{self.base_url}/v1/vpgs/statuses'
         if status == None:
-            headers = {
-    'Content-Type': 'application/json',
-    'Authorization': f'Bearer {self.auth_token}'
-}
-            url = f'https://{self.base_url}/v1/vpgs/statuses'
             response = requests.get(url, headers=headers, verify=False)
             list_of_statuses = response.json()
             print(list_of_statuses)
         else:
-            if status > 2:
-                print("Invalid status...")
-                return None
-            headers = {
-                'Content-Type': 'application/json',
-                'Authorization': f'Bearer {self.auth_token}'
-            }
-            url = f'https://{self.base_url}/v1/vpgs/statuses'
             response = requests.get(url, headers=headers, verify=False)
             list_of_statuses = response.json()
+            if status > 2:
+                print("This status is not good... VPG Considered DOWN...")
             return list_of_statuses[status]
+    
+    def get_substatus(self, substatus=None):
+        '''
+        Returns the substatus of a VPG if a substatus number is provided. If no substatus number is provided, it returns a list of all possible substatuses.
+        '''
+        headers = {
+    'Content-Type': 'application/json',
+    'Authorization': f'Bearer {self.auth_token}'
+            }
+        url = f'https://{self.base_url}/v1/vpgs/substatuses'
+        if substatus == None:
+            response = requests.get(url, headers=headers, verify=False)
+            list_of_substatuses = response.json()
+            return list_of_substatuses
+            #print(list_of_substatuses)
+        else:
+            response = requests.get(url, headers=headers, verify=False)
+            list_of_substatuses = response.json()
+            return list_of_substatuses[substatus]
 
     
     def get_throughput_zvm(self) -> int:
@@ -150,7 +164,7 @@ class ZertoGet():
         for vpg in list_of_vpgs:
             throughput += vpg['ThroughputInMB']
         
-        print(f'Total throughput on {self.zvm_name} is {throughput} MB')
+        #print(f'Total throughput on {self.zvm_name} is {throughput} MB')
         return throughput
     
     def get_throughput_sites(self) -> list:
@@ -176,8 +190,9 @@ class ZertoGet():
                 one_site_with_throughput = {site: throughput}
                 
             all_sites_with_throughput.append(one_site_with_throughput)
-        print(all_sites_with_throughput)
+        #print(all_sites_with_throughput)
         return all_sites_with_throughput
+    
     def get_percent_vpgs_up(self):
         vpg_list = self.get_vpgs()
         list_of_sites = []
@@ -196,7 +211,8 @@ class ZertoGet():
                         up_vpgs += 1
             percent = (up_vpgs / total_vpgs) * 100
             percent_vpgs_per_site.append({site: percent})
-        print(percent_vpgs_per_site)
+        #print(percent_vpgs_per_site)
+        return percent_vpgs_per_site
 
         
 
@@ -204,9 +220,22 @@ class ZertoGet():
 
 
 
-zerto = ZertoGet('sgu prod')
-zerto.get_status()
-#zerto.get_percent_vpgs_up()
-# zerto.get_throughput_zvm()
-# zerto.get_throughput_sites()
+#zerto = ZertoGet('sgu inf')
+
+# site_percent = zerto.get_percent_vpgs_up()
+#zvm_throughput = zerto.get_throughput_zvm()
+#print(zvm_throughput)
+# site_throughput = zerto.get_throughput_sites()
+
+# alert_sites = []
+
+# for site in site_percent:
+#     for key, value in site.items():
+#         if value == 80:
+#             alert_sites.append(key)
+# if alert_sites == []:
+#     pass
+# else:
+#     print(f"The following sites have less than 80% of their VPGs up: {alert_sites}")
+
 
