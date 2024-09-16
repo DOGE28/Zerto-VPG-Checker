@@ -135,34 +135,34 @@ def monitor(location: str): #Creates a while loop function that can be called to
 
         time.sleep(600)
 
-###Uncomment to run SGU PROD
 # sgu_prod_thread = threading.Thread(target=monitor, args=('sgu prod',))
-# sgu_prod_thread.start()
-# sgu_prod_thread.join()
-
-###Uncomment to run BOI PROD
 # boi_prod_thread = threading.Thread(target=monitor, args=('boi prod',))
-# boi_prod_thread.start()
-# boi_prod_thread.join()
-
-
-###Uncomment to run FB PROD
 # fb_prod_thread = threading.Thread(target=monitor, args=('fb prod',))
+
+
+# sgu_prod_thread.start()
+# boi_prod_thread.start()
 # fb_prod_thread.start()
+
+
+# sgu_prod_thread.join()
+# boi_prod_thread.join()
 # fb_prod_thread.join()
 
-###Uncomment to run SGU INF
-# sgu_inf_thread = threading.Thread(target=monitor, args=('sgu inf',))
-# sgu_inf_thread.start()
-# sgu_inf_thread.join()
+sgu_inf_thread = threading.Thread(target=monitor, args=('sgu inf',))
+boi_inf_thread = threading.Thread(target=monitor, args=('boi inf',))
+okc_inf_thread = threading.Thread(target=monitor, args=('okc inf',))
+
+sgu_inf_thread.start()
+boi_inf_thread.start()
+okc_inf_thread.start()
+
+sgu_inf_thread.join()
+boi_inf_thread.join()
+okc_inf_thread.start()
 
 
-###Uncomment to run BOI INF
-# boi_inf_thread = threading.Thread(target=monitor, args=('boi inf',))
-# boi_inf_thread.start()
-# boi_inf_thread.join()
 
-###Uncomment to run OKC INF
-# okc_inf_thread = threading.Thread(target=monitor, args=('okc inf',))
-# okc_inf_thread.start()
-# okc_inf_thread.join()
+
+
+
