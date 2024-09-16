@@ -135,28 +135,6 @@ def monitor(location: str): #Creates a while loop function that can be called to
 
         time.sleep(600)
 
-sgu_prod_thread = None
-boi_prod_thread = None
-fb_prod_thread = None
-sgu_inf_thread = None
-boi_inf_thread = None
-okc_inf_thread = None
-
-error = ValueError("No thread is defined... Please define a thread in alerts.py")
-
-if sgu_prod_thread == None:
-    raise error
-elif boi_prod_thread == None:
-    raise error
-elif fb_prod_thread == None:
-    raise error
-elif sgu_inf_thread == None:
-    raise error
-elif boi_inf_thread == None:
-    raise error
-elif okc_inf_thread == None:
-    raise error
-
 ###Uncomment to run SGU PROD
 # sgu_prod_thread = threading.Thread(target=monitor, args=('sgu prod',))
 # sgu_prod_thread.start()
