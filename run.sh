@@ -13,6 +13,10 @@ fi
 
 
 
-cd ~/Zerto-Alerts/Zerto-VPG-Checker-main/appv2
+cd ~/Zerto-Alerts/Zerto-VPG-Checker-main
+
+source ./venv/bin/activate
+
+cd appv2/
 
 python3 alerts.py
