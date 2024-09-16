@@ -2,6 +2,8 @@ import zerto as z
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import time
+import threading
 
 
 
@@ -28,6 +30,7 @@ class Alerts():
 
         ###PROBLEM 1: IS ZVM THROUGHPUT 0?
         if self.zvm_throughput <= 0 and self.location != 'boi inf':
+            print(self.zvm_throughput)
             problems.append(f"ZVM throughput is 0 for {self.location}")
 
         ###PROBLEM 2: ARE ANY SITE THROUGHPUTS 0?
@@ -57,6 +60,11 @@ class Alerts():
 class SendEmails(Alerts):
     def __init__(self, location):
         super().__init__(location)
+        if 'inf' in location:
+            self.server = "10.101.70.50"
+        else:
+            self.server = "10.200.201.15"
+        self.server = "10.200.201.15"
         self.determine()
         self.sender = "systems@tonaquint.com"
         self.receiver = "tsullivan@tonaquint.com"
@@ -69,8 +77,10 @@ class SendEmails(Alerts):
 
         Please investigate immediately!
         """
-        self.server = ""
         self.port = 25
+    
+    def get_problems(self):
+        return self.problems
 
     def send(self):
         msg = MIMEMultipart()
@@ -89,26 +99,92 @@ class SendEmails(Alerts):
 
 
 
-sgu_prod = SendEmails('sgu prod')
-sgu_prod.send()
-
-boi_prod = SendEmails('boi prod')
-boi_prod.send()
-
-fb_prod = SendEmails('fb prod')
-fb_prod.send()
-
-sgu_inf = SendEmails('sgu inf')
-sgu_inf.send()
-
-#boi_inf = SendEmails('boi inf')
-#boi_inf.send()
+###Loop Logic
 
 
+consecutive_problem_count = 0
+def monitor(location: str): #Creates a while loop function that can be called to run the monitoring logic indefinitely
+    """
+    location: str | The site to monitor, possible values ['sgu prod', 'boi prod', 'fb prod', 'sgu inf', 'boi inf', 'okc inf']
+    """
+    global consecutive_problem_count
 
-# try:
-#     okc_inf = SendEmails('okc inf')
-#     okc_inf.send()
-# except ValueError as e:
-#     print("You attempted to connect to OKC...")
-#     print("You're probably on the VPN and can't connect...")
+    consecutive_threshold = 3
+    while True:
+
+        
+        alert = SendEmails(location)
+        problems = alert.get_problems()
+
+        if problems == []:
+            consecutive_problem_count = 0
+            print("No problems detected")
+        else:
+
+        
+            consecutive_problem_count += 1
+            print(consecutive_problem_count)
+            print(f"problem detected {problems}")
+
+            if consecutive_problem_count >= 0:
+                if consecutive_problem_count == consecutive_threshold:
+                    alert.send()
+                    print(f"Sending alert for {location}")
+                    consecutive_problem_count = 0
+
+
+        time.sleep(600)
+
+sgu_prod_thread = None
+boi_prod_thread = None
+fb_prod_thread = None
+sgu_inf_thread = None
+boi_inf_thread = None
+okc_inf_thread = None
+
+error = ValueError("No thread is defined... Please define a thread in alerts.py")
+
+if sgu_prod_thread == None:
+    raise error
+elif boi_prod_thread == None:
+    raise error
+elif fb_prod_thread == None:
+    raise error
+elif sgu_inf_thread == None:
+    raise error
+elif boi_inf_thread == None:
+    raise error
+elif okc_inf_thread == None:
+    raise error
+
+###Uncomment to run SGU PROD
+# sgu_prod_thread = threading.Thread(target=monitor, args=('sgu prod',))
+# sgu_prod_thread.start()
+# sgu_prod_thread.join()
+
+###Uncomment to run BOI PROD
+# boi_prod_thread = threading.Thread(target=monitor, args=('boi prod',))
+# boi_prod_thread.start()
+# boi_prod_thread.join()
+
+
+###Uncomment to run FB PROD
+# fb_prod_thread = threading.Thread(target=monitor, args=('fb prod',))
+# fb_prod_thread.start()
+# fb_prod_thread.join()
+
+###Uncomment to run SGU INF
+# sgu_inf_thread = threading.Thread(target=monitor, args=('sgu inf',))
+# sgu_inf_thread.start()
+# sgu_inf_thread.join()
+
+
+###Uncomment to run BOI INF
+# boi_inf_thread = threading.Thread(target=monitor, args=('boi inf',))
+# boi_inf_thread.start()
+# boi_inf_thread.join()
+
+###Uncomment to run OKC INF
+# okc_inf_thread = threading.Thread(target=monitor, args=('okc inf',))
+# okc_inf_thread.start()
+# okc_inf_thread.join()

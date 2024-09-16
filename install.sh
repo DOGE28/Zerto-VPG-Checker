@@ -60,16 +60,10 @@ echo
 echo ".env file has been created successfully. Please fill in the required values."
 echo
 
-# Setup Cronjobs
+# Display the next steps
 
-echo_message "Would you like to set up a cronjob for this script to run every 15 minues? (y/n)"
-read -r response
+echo_message "Next steps:"
 
-if [ "$response" == "y" ]; then
-    echo_message "Setting up cronjob..."
-    cronjob="*/15 * * * * $(pwd)/venv/bin/python $(pwd)/alerts.py"
-    (crontab -l; echo "$cronjob") | crontab -
-    echo "Cronjob has been set up successfully"
-fi
-
-echo_message "Installation has been completed successfully."
+echo "1. Fill in the required values in the .env file"
+echo "2. Adjust the alerts.py file by uncommenting the desired location (Check lines 160-190)"
+echo "3. Run the application using the command: ./run.sh"
