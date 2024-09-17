@@ -24,8 +24,7 @@ chmod +x run.sh
 ```
 
 > [Note!]
-> You may need to download unzip if the above script does not work.
-> ```sudo apt install unzip```
+> You may need to download unzip if the above script does not work. ```sudo apt install unzip```
 
 
 If you haven't run into any errors, you can then run:
