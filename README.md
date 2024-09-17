@@ -23,7 +23,7 @@ chmod +x install.sh
 chmod +x run.sh
 ```
 
-> [Note!]
+> [!Note]
 > You may need to download unzip if the above script does not work. ```sudo apt install unzip```
 
 
