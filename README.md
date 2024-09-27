@@ -65,3 +65,9 @@ The below command will check to make sure the program isn't already running, and
 ```
 ~/Zerto-Alerts/Zerto-VPG-Checker-main/run.sh
 ```
+
+Finally, to verify that the script is currently running, use the command:
+```
+sudo systemdctl status zerto-alerts.service
+```
+It should show the service as active and you will see the print statements of the script in the output.
