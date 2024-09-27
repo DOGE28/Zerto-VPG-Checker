@@ -60,40 +60,10 @@ echo
 echo ".env file has been created successfully. Please fill in the required values."
 echo
 
-echo_message "Creating systemd service..."
-
-# Create a systemd service
-cat <<EOL > /etc/systemd/system/zerto-alerts.service
-[Unit]
-Description=Zerto Alerts Service
-After=network.target
-
-[Service]
-User=$USER
-WorkingDirectory=/home/automate/Zerto-Alerts/Zerto-VPG-Checker-main
-ExecStart=/bin/bash /home/automate/Zerto-Alerts/Zerto-VPG-Checker-main/run.sh
-Restart=always
-RestartSec=5
-
-StandardOutput=journal
-StandardError=journal
-
-[Install]
-WantedBy=multi-user.target
-EOL
-
-echo "Systemd service has been created successfully"
-echo "Reloading systemd daemon..."
-sudo systemctl daemon-reload
-
-echo "Zerto Alerts service has been created successfully and is ready to be started"
-
 # Display the next steps
 
-echo_message "Next steps:"
+echo_message "Final steps:"
 
 echo "1. Fill in the required values in the .env file"
 echo "2. Adjust the alerts.py file by uncommenting the desired location (Check lines 160-190)"
-echo "3. Run the application using the command: sudo systemctl start zerto-alerts.service"
-
-echo_message "The Zerto Alerts service has been successfully installed and configured"
+echo "3. Run the application using the command: ./run.sh"
