@@ -71,17 +71,18 @@ echo
 
 # Create systemd service
 
+
+
 echo_message "Creating systemd service..."
 
-USER = $(whoami)
-PWD = $(pwd)
+PWD=$(pwd)
 
 echo "[Unit]
 Description=Zerto Alerts Service
 After=network.target
 
 [Service]
-User=$USER
+User=zadmin
 WorkingDirectory=$PWD
 Environment='PATH=$PWD/venv/bin'
 
