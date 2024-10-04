@@ -73,7 +73,7 @@ echo
 
 echo_message "Creating systemd service..."
 
-cat <<EOL > /etc/systemd/system/zerto-alerts.service
+sudo cat <<EOL > /etc/systemd/system/zerto-alerts.service
 [Unit]
 Description=Zerto Alerts Service
 After=network.target
