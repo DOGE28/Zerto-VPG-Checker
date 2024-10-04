@@ -69,4 +69,41 @@ echo
 echo ".env file has been created successfully"
 echo
 
+# Create systemd service
 
+echo_message "Creating systemd service..."
+
+cat <<EOL > /etc/systemd/system/zerto-alerts.service
+[Unit]
+Description=Zerto Alerts Service
+After=network.target
+
+[Service]
+User=$USER
+WorkingDirectory=$PWD
+Environment="PATH=$PWD/venv/bin"
+
+ExecStart=$PWD/venv/bin/python3 alerts.py
+Restart=always
+
+[Install]
+
+WantedBy=multi-user.target
+EOL
+
+echo
+echo "Systemd service has been created successfully"
+
+# Start and enable the systemd service
+
+echo_message "Starting and enabling the systemd service..."
+
+sudo systemctl daemon-reload
+sudo systemctl start zerto-alerts
+sudo systemctl enable zerto-alerts
+
+echo
+
+echo "Systemd service has been started and enabled successfully"
+
+echo_message "Installation has been completed successfully. The Zerto Alerts service is now running."
