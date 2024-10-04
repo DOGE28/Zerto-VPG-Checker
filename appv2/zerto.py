@@ -6,7 +6,7 @@ requests.packages.urllib3.disable_warnings()
 
 class _ZertoAuth():
     def __init__(self):
-        self.base_url = '127.0.0.1'
+        self.base_url = '10.102.83.190'
         self.secret = settings.keycloak_client_secret
     def auth(self):
         auth_url = f'https://{self.base_url}/auth/realms/zerto/protocol/openid-connect/token'
@@ -14,7 +14,7 @@ class _ZertoAuth():
 
         response = requests.post(auth_url, 
                                 data={"grant_type": "client_credentials", 
-                                        "client_id": settings.keycloak_client_id, 
+                                        "client_id": "zerto-api", 
                                         "client_secret": self.secret}, 
                                 timeout=10, 
                                 verify=False)

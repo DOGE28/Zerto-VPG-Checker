@@ -19,8 +19,8 @@ class Alerts():
         problems = []
 
         ###PROBLEM 1: IS ZVM THROUGHPUT 0?
-        if self.zvm_throughput <= 0 and self.location != 'boi inf':
-            print(self.zvm_throughput)
+        if self.zvm_throughput <= 0:
+            #print(self.zvm_throughput)
             problems.append(f"Total throughput for entire ZVM is 0")
 
         ###PROBLEM 2: ARE ANY SITE THROUGHPUTS 0?
@@ -87,7 +87,10 @@ class SendEmails(Alerts):
 consecutive_problem_count = 0
 def monitor(): #Creates a while loop function that can be called to run the monitoring logic indefinitely
     global consecutive_problem_count
-    interval = settings.interval * 60
+    a = 0
+    a = int(settings.interval) * 60
+    #print(a)
+    interval = a
 
     consecutive_threshold = 3
     while True:
@@ -101,7 +104,7 @@ def monitor(): #Creates a while loop function that can be called to run the moni
         else:
 
             consecutive_problem_count += 1
-            print(consecutive_problem_count)
+            #print(consecutive_problem_count)
             print(f"Problem detected {problems}")
 
             if consecutive_problem_count >= 0:
@@ -110,7 +113,7 @@ def monitor(): #Creates a while loop function that can be called to run the moni
                     print(f"Sending alert for ZVM")
                     consecutive_problem_count = 0
 
-        time.sleep(interval)
+        time.sleep(int(interval))
 
 
 

@@ -1,7 +1,6 @@
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    keycloak_client_id: str
     keycloak_client_secret: str
     threshold: int = 90
     smtp_port: int = 25

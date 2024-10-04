@@ -41,7 +41,6 @@ echo "Python dependencies have been installed successfully"
 echo_message "Please provide the following configurations:"
 echo
 
-read -p "Keycloak Client ID: " keycloak_client_id
 read -p "Keycloak Client Secret: " keycloak_client_secret
 read -p "SMTP Address: " smtp_address
 read -p "SMTP Port: " smtp_port
