@@ -73,25 +73,24 @@ echo
 
 echo_message "Creating systemd service..."
 
-service ="
-[Unit]
+USER = $(whoami)
+PWD = $(pwd)
+
+echo "[Unit]
 Description=Zerto Alerts Service
 After=network.target
 
 [Service]
 User=$USER
 WorkingDirectory=$PWD
-Environment="PATH=$PWD/venv/bin"
+Environment='PATH=$PWD/venv/bin'
 
 ExecStart=$PWD/venv/bin/python3 alerts.py
 Restart=always
 
 [Install]
 
-WantedBy=multi-user.target
-"
-
-echo "$service" | sudo tee /etc/systemd/system/zerto-alerts.service > /dev/null
+WantedBy=multi-user.target" | sudo tee /etc/systemd/system/zerto-alerts.service > /dev/null
 
 echo
 echo "Systemd service has been created successfully"
