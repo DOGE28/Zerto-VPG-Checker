@@ -73,7 +73,7 @@ echo
 
 echo_message "Creating systemd service..."
 
-sudo cat <<EOL > /etc/systemd/system/zerto-alerts.service
+service ="
 [Unit]
 Description=Zerto Alerts Service
 After=network.target
@@ -89,7 +89,9 @@ Restart=always
 [Install]
 
 WantedBy=multi-user.target
-EOL
+"
+
+echo "$service" | sudo tee /etc/systemd/system/zerto-alerts.service > /dev/null
 
 echo
 echo "Systemd service has been created successfully"
