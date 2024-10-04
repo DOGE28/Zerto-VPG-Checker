@@ -3,65 +3,35 @@ from config import settings
 
 requests.packages.urllib3.disable_warnings()
 
+
 class _ZertoAuth():
     def __init__(self):
-        pass
-
-    def auth(self, location):
-        if location == 'sgu prod':
-            self.base_url = settings.sgu_prod_zvm_url
-            secret = settings.sgu_prod_secret
-            self.zvm_name = 'SGU Prod'
-        elif location == 'boi prod':
-            self.base_url = settings.boi_prod_zvm_url
-            secret = settings.boi_prod_secret
-            self.zvm_name = 'BOI Prod'
-        elif location == 'fb prod':
-            self.base_url = settings.fb_prod_zvm_url
-            secret = settings.fb_prod_secret
-            self.zvm_name = 'FB Prod'
-        elif location == 'sgu inf':
-            self.base_url = settings.sgu_inf_zvm_url
-            secret = settings.sgu_inf_secret
-            self.zvm_name = 'SGU Inf'
-        elif location == 'boi inf':
-            self.base_url = settings.boi_inf_zvm_url
-            secret = settings.boi_inf_secret
-            self.zvm_name = 'BOI Inf'
-        elif location == 'okc inf':
-            self.base_url = settings.okc_inf_zvm_url
-            secret = settings.okc_inf_secret
-            self.zvm_name = 'OKC Inf'
-        else:
-            print("Invalid location...")
-            return None
-        #print(base_url)
-        #base_url = '10.103.83.190'
-        #print(self.base_url)
+        self.base_url = '127.0.0.1'
+        self.secret = settings.keycloak_client_secret
+    def auth(self):
         auth_url = f'https://{self.base_url}/auth/realms/zerto/protocol/openid-connect/token'
         print("Attempting to authenticate...")
 
         response = requests.post(auth_url, 
                                 data={"grant_type": "client_credentials", 
                                         "client_id": settings.keycloak_client_id, 
-                                        "client_secret": secret}, 
+                                        "client_secret": self.secret}, 
                                 timeout=10, 
                                 verify=False)
 
         if response.status_code == 200:
-            print(f"Authentication successful against {self.base_url}!")
+            print(f"Authentication successful!")
             return response.json()['access_token']
         else:
             print(f'Failed to authenticate: {response.status_code} - {response.text}')
+            print('Please check your credentials and try again...')
             return None
         
 
 class ZertoGet():
-    def __init__(self, location):
-        self.location = location
+    def __init__(self):
         self.zerto_auth = _ZertoAuth()
-        self.auth_token = self.zerto_auth.auth(location)
-        self.zvm_name = self.zerto_auth.zvm_name
+        self.auth_token = self.zerto_auth.auth()
         self.subs_naughty_list = [8, 24, 27, 30, 31, 32, 33] # List of substatuses that are not good and will cause a VPG to be considered down
         #print(self.auth_token)
         self.base_url = self.zerto_auth.base_url

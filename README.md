@@ -1,24 +1,45 @@
-# Zerto VPG Checker
+# Zerto ZVM Health Checker
 
-This project is designed to alert the cloud team when a percentage of a Zerto site's VPGs are down, if a site's total throughput is 0, or if the entire ZVM's throughput is 0. It is custom built for the Tonaquint team's infrastructure and only they have permission to use this code.
+This is designed to be installed onto the Linux machine that runs your ZVM. Please do not attempt to install this on Windows or a different Linux machine as it will not work!
 
-# Installation
+## How It Works
+
+This is a Python script ran as a systemd service that checks the status of your ZVM every 10 minutes. If there is a problem for three consecutive checks (30 minutes), a problem is reported and emailed. If there is a problem that persists through the three consecutive checks, the chances of it being a false positive are next to none.
+
+We suggest keeping this at the default of 10 minutes to avoid bogging down the ZVM with API calls. 
+
+## Keycloak
+
+We will need to create a Client inside of Keycloak that we will use to authenticate against the ZVM API.
+
+1. Log in to Keycloak at h<span>ttps:</span>//ZVM-IP/auth as your admin user that came preconfigured with the ZVM and go to the "zerto" Realm in the top left
+
+![alt text](resources/image.png)
+
+2. Go to "Client" and create a new client
+    - Client ID: zerto-api
+        - Next
+    - Turn on "Client authentication" and "Authroization", check the "Standard flow", "Implicit flow", and "Direct access grants" boxes
+    - Save (No other changes need to be made)
+
+3. Go to the newly made zerto-api client, go to the "Credentials" tab and copy the "Client Secret" for later use.
+
+## Installation
+
 
 Begin by making a directory called 'Zerto-Alerts' and entering it.
 
 ```
-cd
-mkdir Zerto-Alerts
-cd Zerto-Alerts
+cd && mkdir Zerto-Alerts && cd Zerto-Alerts
 ```
 
-Then run the following to download the monitor and make the installation and run scripts executable.
+Then run the following to download the files and make the installation and run scripts executable.
 
 ```
-curl -LO https://github.com/DOGE28/Zerto-VPG-Checker/archive/refs/heads/main.zip
+curl -LO https://github.com/DOGE28/Zerto-VPG-Checker-Linux/archive/refs/heads/Client.zip
 unzip main.zip
-rm main.zip
-cd Zerto-VPG-Checker-main
+rm main.zipc
+cd Zerto-VPG-Checker-Linux-Client
 chmod +x install.sh
 chmod +x run.sh
 ```
@@ -27,46 +48,28 @@ chmod +x run.sh
 > You may need to download unzip if the above script does not work. ```sudo apt install unzip```
 
 
-If you haven't run into any errors, you can then run:
+Please have the following before continuing:
+
+* Keycloak zerto-api client secret
+* SMTP server IP/FQDN
+* SMTP port 
+* Email address to send alerts
+* Email address(s) to receive alerts
+* VPG threshold percent (default: 90)
+    - If percent of VPGs **UP** is less than this, report a problem
+* Run interval in minutes (default: 10)
+
+Next, run the following to begin the installation
 
 ```
 ./install.sh
 ```
 
-This will install all needed dependencies. Once finished, you will need to input all necessary environment variables into the .env file.
+This will install all needed dependencies, create a `.env` file with the prompted information, and create a system service that will run on startup.
+If you ever need to change the information you initially provided in the installtion script, you can change them in the created `.env` file. 
 
-Below is the snippet of code that outlines which sites get monitored. They are grouped into production and infrastructure sites. Copy and paste which group you want into the bottom of alerts.py. The code for INF is already there and ready to go, so if you want production you will need to comment (#) INF out and make sure production is in.
 
-```
-###Production Threading
-sgu_prod_thread = threading.Thread(target=monitor, args=('sgu prod',))
-boi_prod_thread = threading.Thread(target=monitor, args=('boi prod',))
-fb_prod_thread = threading.Thread(target=monitor, args=('fb prod',))
-
-sgu_prod_thread.start()
-boi_prod_thread.start()
-fb_prod_thread.start()
-
-sgu_prod_thread.join()
-boi_prod_thread.join()
-fb_prod_thread.join()
-
-###Infrastructure Threading
-sgu_inf_thread = threading.Thread(target=monitor, args=('sgu inf',))
-boi_inf_thread = threading.Thread(target=monitor, args=('boi inf',))
-okc_inf_thread = threading.Thread(target=monitor, args=('okc inf',))
-
-sgu_inf_thread.start()
-boi_inf_thread.start()
-okc_inf_thread.start()
-
-sgu_inf_thread.join()
-boi_inf_thread.join()
-okc_inf_thread.start()
-```
-Take note of how the code is organized. First the 'threading.Thread...' class is called for each site, then '.start()' then '.join()'. If it isn't working please review this section and make sure that it is formatted correctly. Also check the .env file.
-
-# Systemd Commands
+## Systemd Commands
 
 The install script will get everything ready for the monitor to run continuously, even after restart. But the service still needs to be started initially right after you've finished getting environment variables and setting which sites you want to monitor.
 
