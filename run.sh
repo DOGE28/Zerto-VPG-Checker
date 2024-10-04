@@ -13,7 +13,7 @@ fi
 
 
 
-cd ~/Zerto-Alerts/Zerto-VPG-Checker-main
+cd ~/Zerto-Alerts/Zerto-VPG-Checker-Client/
 
 source ./venv/bin/activate
 

@@ -8,8 +8,7 @@ class Settings(BaseSettings):
     smtp_address: str
     smtp_sender: str
     smtp_receiver: str
-
-
+    interval: str
     class Config:
         env_file = '../.env'
 settings = Settings()

@@ -36,34 +36,37 @@ pip install -r requirements.txt
 echo
 echo "Python dependencies have been installed successfully"
 
+# Prompt user for Keycloak and SMTP configurations
+
+echo_message "Please provide the following configurations:"
+echo
+
+read -p "Keycloak Client ID: " keycloak_client_id
+read -p "Keycloak Client Secret: " keycloak_client_secret
+read -p "SMTP Address: " smtp_address
+read -p "SMTP Port: " smtp_port
+read -p "SMTP Sender: " smtp_sender
+read -p "SMTP Receiver: " smtp_receiver
+read -p "Threshold Percent (default: 90) " threshold
+read -p "Interval in minutes (default: 10): " interval
+
 # Create .env file
 
 echo_message "Creating .env file..."
 
 cat <<EOL > .env
-keycloak_client_id=
-sgu_prod_zvm_url=
-sgu_prod_secret=
-boi_prod_zvm_url=
-boi_prod_secret=
-fb_prod_zvm_url=
-fb_prod_secret=
-sgu_inf_zvm_url=
-sgu_inf_secret=
-boi_inf_zvm_url=
-boi_inf_secret=
-okc_inf_zvm_url=
-okc_inf_secret=
+keycloak_client_id=$keycloak_client_id
+keycloak_client_secret=$keycloak_client_secret
+smtp_address=$smtp_address
+smtp_port=$smtp_port
+smtp_sender=$smtp_sender
+smtp_receiver=$smtp_receiver
+threshold=$threshold
+interval=$interval
 EOL
 
 echo
-echo ".env file has been created successfully. Please fill in the required values."
+echo ".env file has been created successfully"
 echo
 
-# Display the next steps
 
-echo_message "Final steps:"
-
-echo "1. Fill in the required values in the .env file"
-echo "2. Adjust the alerts.py file by uncommenting the desired location (Check lines 160-190)"
-echo "3. Run the application using the command: ./run.sh"
