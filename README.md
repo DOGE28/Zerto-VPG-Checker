@@ -37,8 +37,8 @@ Then run the following to download the files and make the installation and run s
 
 ```
 curl -LO https://github.com/DOGE28/Zerto-VPG-Checker-Linux/archive/refs/heads/Client.zip
-unzip main.zip
-rm main.zipc
+unzip Client.zip
+rm Client.zip
 cd Zerto-VPG-Checker-Linux-Client
 chmod +x install.sh
 chmod +x run.sh
