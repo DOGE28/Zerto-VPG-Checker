@@ -18,7 +18,7 @@ PyHamcrest==2.0.2
 pymongo==3.11.0
 pytest==5.4.3
 python-dotenv==1.0.1
-requests==2.32.3
+requests~=2.24.0
 servicemanager==2.0.10
 typing_extensions==4.12.2
 urllib3==2.2.2
