@@ -77,22 +77,22 @@ If you ever need to change the information you initially provided in the install
 
 ## Systemd Commands
 
-The install script will get everything ready for the monitor to run continuously, even after restart. But the service still needs to be started initially right after you've finished getting environment variables and setting which sites you want to monitor.
+The install script will get everything ready for the monitor to run continuously, even after restart. Below are some relevant commands you may want to know.
 
-The below command will start the zerto-alerts service:
+Starts the `zerto-alerts` service:
 
 ```
 sudo systemctl start zerto-alerts
 ```
 
-This command will check the status of the service and include important information from the most recent run of the monitor:
+Restarts the service
 
 ```
-sudo sustemctl status zerto-alerts
+sudo systemctl restart zerto-alerts
 ```
 
-Finally, to verify that the script is currently running, use the command:
+This command will check the status of the service and include important information from the most recent run of the monitor. If there are issues with your deployment, this will inform you of what isn't working.
+
 ```
-sudo systemdctl status zerto-alerts.service
+sudo systemctl status zerto-alerts
 ```
-It should show the service as active and you will see the print statements of the script in the output.
