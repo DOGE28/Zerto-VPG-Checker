@@ -1,12 +1,18 @@
 # Zerto ZVM Health Checker
 
-This is designed to be installed onto the Linux machine that runs your ZVM. Please do not attempt to install this on Windows or a different Linux machine as it will not work!
+This is a companion script designed to run along side the Linux ZVM.
 
 ## How It Works
 
 This is a Python script ran as a systemd service that checks the status of your ZVM every 10 minutes. If there is a problem for three consecutive checks (30 minutes), a problem is reported and emailed. If there is a problem that persists through the three consecutive checks, the chances of it being a false positive are next to none.
 
-We suggest keeping this at the default of 10 minutes to avoid bogging down the ZVM with API calls. 
+We suggest keeping this at the default of 10 minutes to avoid bogging down the ZVM with API calls.
+
+The three problems this script looks for:
+
+* If total ZVM throughput in MBs drops to zero
+* If the throughput of a single site drops to zero
+* A certain percentage of VPGs (default 90%) are considered down
 
 ## Keycloak
 
