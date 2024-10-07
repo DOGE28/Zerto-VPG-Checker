@@ -30,6 +30,9 @@ We will need to create a Client inside of Keycloak that we will use to authentic
 
 3. Go to the newly made zerto-api client, go to the "Credentials" tab and copy the "Client Secret" for later use.
 
+> [!IMPORTANT]
+> The script assumes the Client ID is 'zerto-api' and **will not** work if set to something else
+
 ## Installation
 
 
