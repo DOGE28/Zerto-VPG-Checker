@@ -65,6 +65,9 @@ Please have the following before continuing:
     - If percent of VPGs **UP** is less than this, report a problem
 * Run interval in minutes (default: 10)
 
+> [!NOTE]
+> The reason we are ok with a certain amount of VPGs considered down is to take into account maintenance as well as planned pauses and reconfigurations.
+
 Next, run the following to begin the installation
 
 ```
