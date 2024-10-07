@@ -81,7 +81,7 @@ Description=Zerto Alerts Service
 After=network.target
 
 [Service]
-ExecStart=$PWD/run.sh
+ExecStart=/bin/bash $PWD/run.sh
 Restart=always
 RestartSec=5
 User=zadmin
