@@ -12,6 +12,33 @@ else
 fi
 
 
+# Check for test option
+
+case "$1" in
+    test)
+        echo "Sending test email..."
+        cd /home/zadmin/Zerto-Alerts/Zerto-VPG-Checker-Linux-Client/
+
+        source ./venv/bin/activate
+
+        cd appv2/
+
+        python3 -u alerts.py --test
+        ;;
+    *)
+        echo "Running in production mode..."
+        cd /home/zadmin/Zerto-Alerts/Zerto-VPG-Checker-Linux-Client/
+
+        source ./venv/bin/activate
+
+        cd appv2/
+
+        python3 -u alerts.py
+        ;;
+esac
+
+
+
 
 cd /home/zadmin/Zerto-Alerts/Zerto-VPG-Checker-Linux-Client/
 

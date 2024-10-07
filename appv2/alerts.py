@@ -5,6 +5,14 @@ from email.mime.text import MIMEText
 import time
 import threading
 from config import settings
+import argparse
+
+parser = argparse.ArgumentParser(description='ZVM Monitoring Tool')
+parser.add_argument('--test', help='Sends test email', action='store_true')
+
+
+args = parser.parse_args()
+
 
 class Alerts():
 
@@ -54,15 +62,27 @@ class SendEmails(Alerts):
         self.determine()
         self.sender = settings.smtp_sender
         self.receiver = settings.smtp_receiver
-        self.subject = f"A problem has been detected with your ZVM"
-        self.body = f"""
-        
-        The following problems have been detected with your ZVM:
 
-        {self.problems}
+        if args.test:
+            self.subject = f"Test Email from ZVM Monitoring Tool"
+        else:
+            self.subject = f"A problem has been detected with your ZVM"
 
-        Please investigate immediately!
-        """
+        if args.test:
+            self.body = f"""
+            This is a test email to verify that the ZVM monitoring tool is working correctly.
+
+            If you have received this email, the tool is working as expected.
+            """
+        else:
+            self.body = f"""
+            
+            The following problems have been detected with your ZVM:
+
+            {self.problems}
+
+            Please investigate immediately!
+            """
         self.port = settings.smtp_port
     
     def get_problems(self):
@@ -114,6 +134,13 @@ def monitor(): #Creates a while loop function that can be called to run the moni
                     consecutive_problem_count = 0
 
         time.sleep(int(interval))
+
+
+if args.test:
+    test = SendEmails()
+    test.problems = ["Test email"]
+    test.send()
+    exit()
 
 
 
