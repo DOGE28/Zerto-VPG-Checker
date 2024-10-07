@@ -81,15 +81,16 @@ Description=Zerto Alerts Service
 After=network.target
 
 [Service]
+ExecStart=$PWD/run.sh
+Restart=always
+RestartSec=5
 User=zadmin
 WorkingDirectory=$PWD
-Environment='PATH=$PWD/venv/bin'
 
-ExecStart=$PWD/venv/bin/python3 alerts.py
-Restart=always
+StandardOutput=journal
+StandardError=journal
 
 [Install]
-
 WantedBy=multi-user.target" | sudo tee /etc/systemd/system/zerto-alerts.service > /dev/null
 
 echo

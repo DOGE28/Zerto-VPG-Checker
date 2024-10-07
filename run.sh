@@ -19,4 +19,4 @@ source ./venv/bin/activate
 
 cd appv2/
 
-python3 alerts.py
+python3 -u alerts.py
