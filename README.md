@@ -91,7 +91,7 @@ Starts the `zerto-alerts` service:
 sudo systemctl start zerto-alerts
 ```
 
-Restarts the service
+Restarts the service:
 
 ```
 sudo systemctl restart zerto-alerts

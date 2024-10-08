@@ -1,3 +1,4 @@
+#!/bin/bash
 echo "Checking if an instance is already running..."
 
 PID=$(pgrep -f "alerts.py")
@@ -11,28 +12,11 @@ else
     echo "No instance is running. Proceeding..."
 fi
 
+echo "Running in production mode..."
+cd /home/zadmin/Zerto-Alerts/Zerto-VPG-Checker-Linux-Client/
 
-# Check for test option
+source ./venv/bin/activate
 
-case "$1" in
-    test)
-        echo "Sending test email..."
-        cd /home/zadmin/Zerto-Alerts/Zerto-VPG-Checker-Linux-Client/
+cd appv2/
 
-        source ./venv/bin/activate
-
-        cd appv2/
-
-        python3 -u alerts.py --test
-        ;;
-    *)
-        echo "Running in production mode..."
-        cd /home/zadmin/Zerto-Alerts/Zerto-VPG-Checker-Linux-Client/
-
-        source ./venv/bin/activate
-
-        cd appv2/
-
-        python3 -u alerts.py
-        ;;
-esac
+python3 -u alerts.py

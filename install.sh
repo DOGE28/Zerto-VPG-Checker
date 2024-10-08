@@ -82,7 +82,6 @@ After=network.target
 
 [Service]
 ExecStart=/bin/bash $PWD/run.sh
-ExecStartPost=/bin/bash $PWD/run.sh test
 Restart=always
 RestartSec=5
 User=zadmin
