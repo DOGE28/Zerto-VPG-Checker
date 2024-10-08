@@ -33,9 +33,7 @@ class ZertoGet():
         self.zerto_auth = _ZertoAuth()
         self.auth_token = self.zerto_auth.auth()
         self.subs_naughty_list = [8, 24, 27, 30, 31, 32, 33] # List of substatuses that are not good and will cause a VPG to be considered down
-        #print(self.auth_token)
         self.base_url = self.zerto_auth.base_url
-        #print(location)
         if not self.auth_token:
             print("There was a problem getting the auth token...")
             return None
@@ -118,7 +116,6 @@ class ZertoGet():
             response = requests.get(url, headers=headers, verify=False)
             list_of_substatuses = response.json()
             return list_of_substatuses
-            #print(list_of_substatuses)
         else:
             response = requests.get(url, headers=headers, verify=False)
             list_of_substatuses = response.json()
@@ -133,8 +130,6 @@ class ZertoGet():
         throughput = 0
         for vpg in list_of_vpgs:
             throughput += vpg['ThroughputInMB']
-        
-        #print(f'Total throughput on {self.zvm_name} is {throughput} MB')
         return throughput
     
     def get_throughput_sites(self) -> list:
@@ -149,18 +144,15 @@ class ZertoGet():
             site = vpg['ProtectedSiteName']
             if site not in list_of_sites:
                 list_of_sites.append(site)
-        #print(list_of_sites)
         all_sites_with_throughput = []
         for site in list_of_sites:
             throughput = 0
             for vpg in vpgs:
                 if vpg['ProtectedSiteName'] == site:
                     throughput += vpg['ThroughputInMB']
-            #print(f'Total throughput on {site} is {throughput} MB')
                 one_site_with_throughput = {site: throughput}
                 
             all_sites_with_throughput.append(one_site_with_throughput)
-        #print(all_sites_with_throughput)
         return all_sites_with_throughput
     
     def get_percent_vpgs_up(self):
@@ -181,31 +173,4 @@ class ZertoGet():
                         up_vpgs += 1
             percent = (up_vpgs / total_vpgs) * 100
             percent_vpgs_per_site.append({site: percent})
-        #print(percent_vpgs_per_site)
         return percent_vpgs_per_site
-
-        
-
-
-
-
-
-#zerto = ZertoGet('sgu inf')
-
-# site_percent = zerto.get_percent_vpgs_up()
-#zvm_throughput = zerto.get_throughput_zvm()
-#print(zvm_throughput)
-# site_throughput = zerto.get_throughput_sites()
-
-# alert_sites = []
-
-# for site in site_percent:
-#     for key, value in site.items():
-#         if value == 80:
-#             alert_sites.append(key)
-# if alert_sites == []:
-#     pass
-# else:
-#     print(f"The following sites have less than 80% of their VPGs up: {alert_sites}")
-
-

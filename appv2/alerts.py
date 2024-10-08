@@ -28,7 +28,6 @@ class Alerts():
 
         ###PROBLEM 1: IS ZVM THROUGHPUT 0?
         if self.zvm_throughput <= 0:
-            #print(self.zvm_throughput)
             problems.append(f"Total throughput for entire ZVM is 0")
 
         ###PROBLEM 2: ARE ANY SITE THROUGHPUTS 0?
@@ -45,7 +44,6 @@ class Alerts():
 
         self.problems = problems
                     
-
     def send_alert(self):
         if self.problems == []:
             print("No problems detected")
@@ -53,7 +51,6 @@ class Alerts():
         print("The following problems have been detected:")
         for problem in self.problems:
             print(problem)
-
 
 class SendEmails(Alerts):
     def __init__(self):
@@ -95,7 +92,7 @@ class SendEmails(Alerts):
         msg['Subject'] = self.subject
         if self.problems == []:
             print("No problems detected")
-            return
+            return    
         else:
             msg.attach(MIMEText(self.body, 'plain'))
             text = msg.as_string()
@@ -107,11 +104,8 @@ class SendEmails(Alerts):
 consecutive_problem_count = 0
 def monitor(): #Creates a while loop function that can be called to run the monitoring logic indefinitely
     global consecutive_problem_count
-    a = 0
-    a = int(settings.interval) * 60
-    #print(a)
-    interval = a
-
+    interval = 0
+    interval = int(settings.interval) * 60
     consecutive_threshold = 3
     while True:
 
@@ -124,7 +118,6 @@ def monitor(): #Creates a while loop function that can be called to run the moni
         else:
 
             consecutive_problem_count += 1
-            #print(consecutive_problem_count)
             print(f"Problem detected {problems}")
 
             if consecutive_problem_count >= 0:
@@ -135,22 +128,14 @@ def monitor(): #Creates a while loop function that can be called to run the moni
 
         time.sleep(int(interval))
 
-
 if args.test:
     test = SendEmails()
     test.problems = ["Test email"]
     test.send()
+    print("Test email sent")
     exit()
 
-
-
+print("Monitoring ZVM")
 zvm_thread = threading.Thread(target=monitor)
 zvm_thread.start()
 zvm_thread.join()
-
-
-
-
-
-
-
